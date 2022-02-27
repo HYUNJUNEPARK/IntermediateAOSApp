@@ -66,8 +66,6 @@ private fun checkFCMToken() {
 <br></br>
 ---
 
-
-
 ><a id = "ref">**참고링크**</a></br>
 
 클라우드 메시징</br>
@@ -88,6 +86,8 @@ https://developer.android.com/training/notify-user/channels
 https://developer.android.com/training/notify-user/expanded
 커스텀타입 알림
 https://developer.android.com/training/notify-user/custom-notification
+알림 터치 작업
+https://developer.android.com/training/notify-user/build-notification#click
 
 ////////////////////////////////////////////////////////
 
@@ -139,7 +139,6 @@ notification
 res - layout 에 별도의 레이아웃 파일을 만듬
 RemoteView 에서는 constraintLayout 을 지원하지 않기 때문에 LinearLayout 을 사용함
 서, 맞춤 레이아웃의 텍스트와 제목에는 각각 TextAppearance_Compat_Notification 및 TextAppearance_Compat_Notification_Title과 같은 지원 라이브러리 스타일을 항상 적용해야 합니다.
-
 
 
 /////////////////

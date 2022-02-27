@@ -3,7 +3,10 @@ package com.june.pushalarmreceiver.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -11,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.june.pushalarmreceiver.R
+import com.june.pushalarmreceiver.activity.MainActivity
 import com.june.pushalarmreceiver.notification.NotificationType
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -54,12 +58,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun createNotification(type: NotificationType, title: String, message: String): Notification {
+
+        //알림 탭
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("notificationType", "${type.title} 타입")
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        //같은 액티비티가 있다면 스택으로 쌓지 않음. 화면이 떠있는 상태에서 알림을 눌렀을 때 같은 액티비티가 또 호출되면 어색함.
+        //알림이 여러개 와도 팬딩인텐트를 여러개 생성하지 않음
+        //마지막에 custom 알림이 오면 "${type.title} 타입" 은 커스텀으로 지정됨 -> 아래코드에서 해결
+        }
+        val pendingIntent = PendingIntent.getActivity(this, type.id, intent, FLAG_UPDATE_CURRENT)
+        //nomal, custom, expandable 에 한해서는 인텐트가 업데이트 됨
+        //결과적으로 타입별로는 펜딩인텐트가 달라짐, 같은 타입은 같은 펜딩 이벤트를 사용
+        /*
+        팬딩 인텐트
+        notificationManager 가 intent 를 보고 판단해 수행 가능할 때 처리
+        */
+
+
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             //오래오 버전 이하 중요도 수준 설정(알림마다 별도로 설정)(오래오 이상에서는 채널에서 중요도 설정)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
         when (type) {
             NotificationType.NORMAL -> Unit
             NotificationType.EXPANDABLE -> {
