@@ -1,7 +1,8 @@
-package com.june.pushalarmreceiver
+package com.june.pushalarmreceiver.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import com.june.pushalarmreceiver.databinding.ActivityMainBinding
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if(task.isSuccessful) {
                 binding.firebaseTokenTextView.text = task.result
+                Log.d("connectionCheck", "[Firebase Token] : ${task.result}")
             }
         }
     }
