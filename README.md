@@ -89,6 +89,10 @@ https://developer.android.com/training/notify-user/custom-notification
 알림 터치 작업
 https://developer.android.com/training/notify-user/build-notification#click
 
+코틀린 문법 : enum 클래스와 valueOf()
+https://gold.gitbook.io/kotlin/class/enum
+
+
 ////////////////////////////////////////////////////////
 
 메시지 서비스
@@ -142,8 +146,12 @@ RemoteView 에서는 constraintLayout 을 지원하지 않기 때문에 LinearLa
 
 
 /////////////////
+/*Intent.FLAG_ACTIVITY_SINGLE_TOP
+앱이 실행되어있는 상태에서 알림을 눌렀을 때 앱을 또 실행 시키면 어색함
+SINGLE_TOP 속성으로 같은 액티비티가 있다면 추가 액티비티 스택을 쌓지 않음
+-> 알림이 여러개와도 펜딩인텐트를 여러개 실행시키지 않음*/
+/////////
 
 //텍스트뷰에 아래 속성을 추가하면 복사를 할 수 있음
 `android:textIsSelectable`
-
 
