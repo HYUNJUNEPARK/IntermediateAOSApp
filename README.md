@@ -11,17 +11,18 @@ https://firebase.google.com/docs/projects/learn-more
 
 
 
-
 안드로이드 , ISO 웹 등에 메세지를 보낼 수 있음
 
 데이터메세지
-앱이 백그라운드, 포어그라운드에 있던 자체적으로 메세지를 처리하기 떄문에 개발이 유연하다
+앱이 백그라운드, 포어그라운드에 있던 자체적으로 메세지를 처리하기 때문에 개발이 유연하다
 대부분의 경우에 사용
 
 알림메세지
 구현이 쉽다
 여러가지 케이스에 유연하게 대응하기 어렵다
-애널리틱스 기반의 A/B 테스팅을 제공하여 마케팅 메세지를 수정하고 개선하는데 도움이 됨
+앱이 백그라운드에서 실행될 때만 메세지를 수신할 수 있음
+ㄴ onMessageReceived 를 호출하지 않음. 알아서 notification 을 만들어서 보여줌
+
 
 1. 프로젝트를 생성하고 안드로이드 앱 추가 버튼 클릭
 2. Android 패키지 이름에는 build.gradle 의
@@ -65,3 +66,48 @@ Firebase 토큰을 확인할 수 있다
 -normal
 -custom
 -extension
+
+///////////////
+
+토큰은 언제든지 변경될 가능성이 있음
+실제 라이브 서비스를 운영할때는 FirebaseMessagingService를 상속받은 클래스에 onNewToken 을 오버라이딩해
+토큰이 갱신될 때마다 서버에다가 토큰도 갱신시킴
+
+
+```kotlin
+서비스를 만들고 인텐트 필터 추가
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+```
+
+
+
+///////
+데이터 메시지
+
+
+https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send
+여기서 우측에 있는 Try this method 를 채워넣음
+parent 에 들어갈 id 는 google-services.json 에서 "project_id" 에서 확인 가능
+
+
+
+바디에 채울 메시지 구조
+https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#Message
+```
+
+
+
+
+```
+
+
+
+////////////////
+클라우드 메시징
+https://firebase.google.com/docs/cloud-messaging/android/receive
+
+
+서버를 구현하지 않아도 API 를 구현할 수 있는 툴
+https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send

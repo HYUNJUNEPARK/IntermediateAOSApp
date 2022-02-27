@@ -9,6 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PushAlarmReceiver">
+
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -19,5 +29,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
