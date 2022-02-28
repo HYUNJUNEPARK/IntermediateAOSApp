@@ -37,7 +37,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun createNotificationChannel(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //O버전 이상에서는 채널에서 중요도 설정
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //O 버전 이상 중요도 설정
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, /*중요도 수준*/NotificationManager.IMPORTANCE_DEFAULT)
             channel.description = CHANNEL_DESCRIPTION
             val notificationService = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -47,7 +47,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun initNotification(remoteMessage: RemoteMessage) {
         val type : NotificationType? = remoteMessage.data["type"] //*NotificationType : NORMAL(title, id), EXPANDABLE(title, id), CUSTOM(title, id)
-            ?.let { type -> //type : NORMAL, EXPANDABLE, CUSTOM
+            ?.let { type -> //서버로 부터 넘어온 type : NORMAL, EXPANDABLE, CUSTOM
                 NotificationType.valueOf(type) //valueOf() : 일치하는 enum constant 가 없으면 IllegalArgumentException 발생
             }
         val title : String = remoteMessage.data["title"] ?: "Empty Title"
@@ -66,18 +66,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle(title)
             .setContentText(message)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT) //O 버전 이하에서는 알림마다 중요도 수준을 별도 설정
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT) //O 버전 이하 중요도 수준 설정
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
         when (type) {
             NotificationType.NORMAL -> Unit
+
             NotificationType.EXPANDABLE -> {
                 notificationBuilder.setStyle(
                     NotificationCompat.BigTextStyle()
                         .bigText(EXPANDABLE_EMOJI_SAMPLE)
                 )
             }
+
             NotificationType.CUSTOM -> {
                 notificationBuilder
                     .setStyle(NotificationCompat.DecoratedCustomViewStyle())
@@ -100,6 +102,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             putExtra("notificationType", "${type.title} 타입") //type.title : 일반 알림, 확장형 알림, 커스텀 알림
             addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
-        return PendingIntent.getActivity(this, type.id, intentForTab, FLAG_UPDATE_CURRENT)
+        return PendingIntent.getActivity(this, /*requestCode*/type.id, /*intent*/intentForTab, FLAG_UPDATE_CURRENT)
     }
 }

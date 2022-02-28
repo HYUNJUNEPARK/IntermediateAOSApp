@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         updateResult()
     }
 
-    //서버로 부터 알림이 오고 알림을 눌렀을 때 실행됨
+    //서버로 부터 알림이 오고 알림을 눌렀을 때마다 실행됨
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
