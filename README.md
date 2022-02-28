@@ -84,13 +84,13 @@ cf. activity_main - textView 에 아래 속성을 추가하면 텍스트를 복�
 -실제 라이브 서비스를 운영할 때 FirebaseMessagingService 를 상속받은 클래스에 onNewToken 을 오버라이딩해 토큰이 갱신될 때마다 서버토큰도 갱신시킴</br>
 
 (3) 파이어베이스에서 지정 앱에 메시지를 보내기</br>
--우측에 있는 Try this method 를 채워넣음
--https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send
+-우측에 있는 Try this method 를 채워넣음</br>
+-https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send</br>
 
--**parent** : id 는 google-services.json - "project_id" 에서 확인 가능
--**Request body**
-    ㄴ token, topic, condition 중 하나는 반드시 추가되어야 하며 이 앱에서는 token 을 사용
-    ㄴ message - data 를 추가하고 원하는 데이터를 key - value 쌍으로 입력 후 EXECUTE
+-**parent** : id 는 google-services.json - "project_id" 에서 확인 가능</br>
+-**Request body**</br>
+    ㄴ token, topic, condition 중 하나는 반드시 추가되어야 하며 이 앱에서는 token 을 사용</br>
+    ㄴ message - data 를 추가하고 원하는 데이터를 key - value 쌍으로 입력 후 EXECUTE</br>
 
 ```
 //Request body sample
