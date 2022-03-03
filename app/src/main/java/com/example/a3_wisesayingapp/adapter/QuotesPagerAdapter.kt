@@ -27,10 +27,10 @@ class QuotesPagerAdapter(
 
     inner class QuoteViewHolder(private val binding: ItemQuoteBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(quote:Quote, isNameRevealed: Boolean) {
-            binding.quoteTextView.text = quote.quote
+            binding.quoteTextView.text = "\"${quote.quote}\""
 
             if (isNameRevealed) {
-                binding.nameTextView.text = quote.name
+                binding.nameTextView.text = "- ${quote.name} -"
                 binding.nameTextView.visibility = View.VISIBLE
             }
             else {
