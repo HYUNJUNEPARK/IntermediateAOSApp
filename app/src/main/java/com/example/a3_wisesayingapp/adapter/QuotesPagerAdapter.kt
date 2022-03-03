@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.a3_wisesayingapp.databinding.ItemQuoteBinding
-import com.example.a3_wisesayingapp.module.Quote
+import com.example.a3_wisesayingapp.model.Quote
 
 class QuotesPagerAdapter(
     private val quotes: List<Quote>,
