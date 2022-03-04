@@ -2,10 +2,7 @@ package com.example.a3_wisesayingapp.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-<<<<<<< HEAD
 import android.view.View
-=======
->>>>>>> feature/README
 import com.example.a3_wisesayingapp.adapter.QuotesPagerAdapter
 import com.example.a3_wisesayingapp.databinding.ActivityMainBinding
 import com.example.a3_wisesayingapp.model.Quote
