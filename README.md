@@ -27,6 +27,21 @@
 (그렇지 않으면 앱의 신뢰성을 해치며 앱 검수 시 문제가 될 수 있음)</br>
 -사용하는 키는 암호화되어 있지 않기 때문에 민감한 데이터를 담아서는 안됨</br>
 -한도가 있음(2000개 매개변수, 500개 조건 등)</br>
+-remote config 패치를 받으면 12시간 뒤에 가능함. 개발용으로 앱을 실행시킬 때마다 패치하는 코드를 추가</br>
+
+```kotlin
+private fun initData() {
+    val remoteConfig = Firebase.remoteConfig
+    remoteConfig.setConfigSettingsAsync(
+        remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 0
+        }
+    )
+    //...
+}
+
+```
+
 <br></br>
 **사용 사례**</br>
 (a) 비율 출시 메커니즘</br>
@@ -42,6 +57,34 @@ https://firebase.google.com/docs/remote-config/use-cases#define_platform_and_loc
 -로드가 끝나면 Complete Handler 에서 fetchAndActivate()를 호출</br>
 -앞선 과정들이 끝나면 로딩 화면을 닫고 사용자가 상호작용을 할 수 있게 함</br>
 *해당 전략을 사용하는 경우 로딩 화면에 시간 제한을 걸어 두는 것이 좋음</br>
+<br></br>
+
+**파이어베이스에서 넘어오는 JSON**
+```
+[
+    {
+        "quote": "지식보다 더 중요한 것은 상상력이다.",
+        "name": "아인슈타인"
+    },
+    {
+        "quote": "나는 생각한다 나는 고로 존재한다.",
+        "name": "데카르트"
+    },
+    {
+        "quote": "산다는 것, 그것은 치열한 전투이다.",
+        "name": "로망로랑"
+    },
+    {
+        "quote": "하루에 3시간을 걸으면 7년 후에 지구를 한바퀴 돌 수 있다.",
+        "name": "사무엘존슨"
+    },
+    {
+        "quote": "언제나 현재에 집중할 수 있다면 행복할 것이다.",
+        "name": "파울로 코엘료"
+    }
+]
+```
+
 
 <br></br>
 <br></br>
