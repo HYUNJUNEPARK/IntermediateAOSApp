@@ -18,6 +18,45 @@ AlarmManager
 
 
 
+
+TimePickerDialog
+-시간 설정 기능이 내장된 클래스
+-처음 다이얼로그의 화면에 표시될 시간을 hourOfDay, minute 으로 세팅
+`TimePickerDialog(context, listener, hourOfDay, minute, is24HourView)`
+
+- listener: TimePickerDialog.OnTimeSetListener!
+`abstract fun onTimeSet(view: TimePicker!, hourOfDay: Int, minute: Int): Unit`
+
+```kotlin
+TimePickerDialog(
+    this,
+    { picker, hour, minute ->
+    val model = saveAlarmModel(hour, minute, false)
+    renderView(model)
+    },
+    calendar.get(Calendar.HOUR_OF_DAY),
+    calendar.get(Calendar.MINUTE),
+    false
+).show()
+```
+
+
+
+
+
+Calender
+-시스템 시간을 가져올 수 있음
+
+```kotlin
+val calendar = Calendar.getInstance()
+calendar.get(Calendar.HOUR_OF_DAY)
+calendar.get(Calendar.MINUTE)
+```
+
+
+
+
+
 Notification
 
 
@@ -26,4 +65,5 @@ BroadCast Receiver
 
 
 
-
+sharedPreference
+-속성값 저장
