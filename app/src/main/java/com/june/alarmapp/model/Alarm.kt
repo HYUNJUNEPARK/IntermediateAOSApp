@@ -1,6 +1,6 @@
 package com.june.alarmapp.model
 
-data class AlarmDisplayModel (val hour: Int, val minute: Int,var isOn: Boolean) {
+data class Alarm (val hour: Int, val minute: Int, var isOn: Boolean) {
     val timeText: String
         get() {
             val h = "%02d".format(if (hour<12) hour else hour -12)
@@ -18,7 +18,7 @@ data class AlarmDisplayModel (val hour: Int, val minute: Int,var isOn: Boolean) 
             return  if(isOn) "알람 끄기" else "알람 켜기"
         }
 
-    fun makeDataForDB(): String {
+    fun makeTimeFormat(): String {
         return "$hour:$minute"
     }
 

@@ -46,7 +46,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/onOffButton"
+        android:background="@color/gray"
         android:layout_width="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/changeAlarmTimeButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +59,8 @@
         android:id="@+id/changeAlarmTimeButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/gray"
+        android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

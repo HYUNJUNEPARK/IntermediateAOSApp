@@ -14,9 +14,9 @@ class AlarmReceiver: BroadcastReceiver() {
     companion object {
         const val NOTIFICATION_ID = 100
         const val NOTIFICATION_CHANNEL_ID = "1000"
+        const val NOTIFICATION_CHANNEL_NAME = "기상 알람"
     }
 
-    //브로드캐스트리시버에서 브로드캐스트에 주었던 펜딩 인텐트가 수신이 되었을 때 오는 콜백함수
     override fun onReceive(context: Context, intent: Intent?) {
         createNotificationChannel(context)
         notifyNotification(context)
@@ -26,7 +26,7 @@ class AlarmReceiver: BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationChannel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
-                "기상 알람",
+                NOTIFICATION_CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH,
             )
             NotificationManagerCompat.from(context).createNotificationChannel(notificationChannel)
@@ -36,12 +36,11 @@ class AlarmReceiver: BroadcastReceiver() {
     private fun notifyNotification(context: Context) {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle("알람")
-                .setContentText("일어날 시간입니다")
+                .setContentTitle(context.getString(R.string.alarm_title))
+                .setContentText(context.getString(R.string.alarm_text))
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
             notify(NOTIFICATION_ID, build.build())
         }
     }
-
 }
