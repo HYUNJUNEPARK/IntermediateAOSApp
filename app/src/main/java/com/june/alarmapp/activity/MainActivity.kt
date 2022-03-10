@@ -15,7 +15,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater)}
-
     companion object {
         private const val SHARED_PREFERENCE_NAME = "time"
         private const val ALARM_KEY = "alarm"
@@ -28,9 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initOnOffButton()
-        initChangeAlarmTimeButton()
+        initChangeAlarmButton()
 
-        //뷰 초기화
         val model = fetchAlarmFromSP()
         updateViews(model)
     }
@@ -40,12 +38,11 @@ class MainActivity : AppCompatActivity() {
             val model = view.tag as? Alarm ?: return@setOnClickListener
             val newModel = saveAlarmToSP(model.hour, model.minute, model.isOn.not())
             updateViews(newModel)
-
             //Alarm On
             if (newModel.isOn) {
                 view.setBackgroundColor(getColor(R.color.red))
                 val triggerTime = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, newModel.hour)
+                    set(/*field*/Calendar.HOUR_OF_DAY, /*value*/newModel.hour)
                     set(Calendar.MINUTE, newModel.minute)
                     if (before(Calendar.getInstance())) {
                         add(Calendar.DATE, 1)
@@ -59,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                     intent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
-
                 alarmManager.setInexactRepeating( //cf. alarmManger.setAndAllowWhileIdle(), alarmManager.setExact()
                     AlarmManager.RTC_WAKEUP,
                     triggerTime.timeInMillis,
@@ -75,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initChangeAlarmTimeButton() {
+    private fun initChangeAlarmButton() {
         binding.changeAlarmTimeButton.setOnClickListener {
             val systemTime = Calendar.getInstance()
             TimePickerDialog(
@@ -109,9 +105,6 @@ class MainActivity : AppCompatActivity() {
         binding.timeTextView.text = model.timeText
         binding.onOffButton.text = model.onOffText
         binding.onOffButton.tag = model
-        //모델 전역변수가 없어 뷰를 업데이트한 모델을 저장할 곳이 없음
-        // ->모델을 잠시 태그에 저장해두고 버튼을 눌렀을 때 태그에 있는 모델을 로드해 사용
-        //태그에 저장된 데이터는 Object 로 저장되어 있기 때문에 꺼내올 때는 형변환을 해줘야한다
     }
 
     private fun cancelAlarm() {
@@ -127,13 +120,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchAlarmFromSP(): Alarm {
         val sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
-        val timeDBValue = sharedPreferences.getString(ALARM_KEY, /*default*/"12:00") ?: "12:00"
-        val onOffDBValue = sharedPreferences.getBoolean(ON_OFF_KEY, /*default*/false)
-        val alarmData = timeDBValue.split(":")
-        val alarmModel = Alarm(
-            hour = alarmData[0].toInt(),
-            minute = alarmData[1].toInt(),
-            isOn = onOffDBValue
+        val timeSPValue = sharedPreferences.getString(ALARM_KEY, /*default*/"12:00") ?: "12:00"
+        val alarmFormat = timeSPValue.split(":")
+        val onOffSPValue = sharedPreferences.getBoolean(ON_OFF_KEY, /*default*/false)
+        val alarm = Alarm(
+            hour = alarmFormat[0].toInt(),
+            minute = alarmFormat[1].toInt(),
+            isOn = onOffSPValue
         )
 
         val pendingIntent = PendingIntent.getBroadcast(
@@ -143,14 +136,13 @@ class MainActivity : AppCompatActivity() {
             PendingIntent.FLAG_NO_CREATE
         )
 
-        if((pendingIntent == null) and alarmModel.isOn) {
-            alarmModel.isOn = false
+        if((pendingIntent == null) and alarm.isOn) {
+            alarm.isOn = false
         }
-
-        else if ((pendingIntent != null) and alarmModel.isOn.not()){
+        else if ((pendingIntent != null) and alarm.isOn.not()){
             pendingIntent.cancel()
         }
-        return alarmModel
+        return alarm
     }
 }
 
