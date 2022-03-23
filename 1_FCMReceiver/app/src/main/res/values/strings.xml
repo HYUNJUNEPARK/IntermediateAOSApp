@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">FCMReceiver</string>
+    <string name="channel_name">Emoji Party</string>
+    <string name="channel_description">Channel For Emoji Party</string>
+    <string name="channel_id">Channel Id</string>
+</resources>
