@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AlarmApp</string>
+    <string name="on_alarm">알람 켜기</string>
+    <string name="change_time">시간 재설정</string>
+    <string name="alarm_title">알람</string>
+    <string name="alarm_text">알람</string>
+</resources>
