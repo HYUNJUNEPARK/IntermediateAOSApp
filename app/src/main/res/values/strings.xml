@@ -9,4 +9,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="toast_login_fail">로그인 실패 : ID/PW 를 확인해주세요</string>
+    <string name="toast_signup_finish">회원가입 완료</string>
+    <string name="toast_signup_fail">회원가입 실패</string>
 </resources>

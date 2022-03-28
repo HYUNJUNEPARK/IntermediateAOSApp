@@ -6,13 +6,14 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import com.example.tinder.R
 import com.example.tinder.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
     private lateinit var auth: FirebaseAuth
     lateinit var emailEditText: EditText
     lateinit var passwordEditText: EditText
@@ -32,21 +33,21 @@ class LoginActivity : AppCompatActivity() {
         initLoginButton()
         initSingUpButton()
         initEmailAndPasswordEditText()
-
     }
 
     private fun initEmailAndPasswordEditText() {
-        val email = emailEditText.text
-        val password = passwordEditText.text
+        val emailTextView = emailEditText.text
+        val passwordTextView = passwordEditText.text
+
         binding.emailEditText.addTextChangedListener {
-            val isEnable = email.isNotEmpty() && password.isNotEmpty()
-            binding.loginButton.isEnabled = isEnable
-            binding.signUpButton.isEnabled = isEnable
+            val isEmpty = emailTextView.isNotEmpty() && passwordTextView.isNotEmpty()
+            binding.loginButton.isEnabled = isEmpty
+            binding.signUpButton.isEnabled = isEmpty
         }
         binding.passwordEditText.addTextChangedListener {
-            val isEnable = email.isNotEmpty() && password.isNotEmpty()
-            binding.loginButton.isEnabled = isEnable
-            binding.signUpButton.isEnabled = isEnable
+            val isEmpty = emailTextView.isNotEmpty() && passwordTextView.isNotEmpty()
+            binding.loginButton.isEnabled = isEmpty
+            binding.signUpButton.isEnabled = isEmpty
         }
     }
 
@@ -61,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }
                     else {
-                        Toast.makeText(this, "로그인 실패 : ID/PW 를 확인해주세요", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.toast_login_fail), Toast.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -75,10 +76,10 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { signUpTask ->
                     Log.d(TAG, "initSingUpButton: $signUpTask")
                     if (signUpTask.isSuccessful) {
-                        Toast.makeText(this, "회원가입 완료", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.toast_signup_finish), Toast.LENGTH_SHORT).show()
                     }
                     else {
-                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.toast_signup_fail), Toast.LENGTH_SHORT).show()
                     }
                 }
         }
