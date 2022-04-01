@@ -23,5 +23,7 @@ class MainActivity : AppCompatActivity() {
         if (auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
         }
+
+
     }
 }
