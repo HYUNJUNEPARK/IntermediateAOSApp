@@ -1,4 +1,4 @@
-package com.example.tinder.activity
+package com.example.tinder.activity.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -114,7 +114,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initFacebookLoginButton() {
-        binding.facebookLoginButton.setPermissions("email", "public_profile") //이메일, 프로필 정보를 가져옴(더 필요한 데이터가 있다면 페이스북 문서 참고)
+        binding.facebookLoginButton.setPermissions("email", "public_profile")//이메일, 프로필 정보를 가져옴(더 필요한 데이터가 있다면 페이스북 문서 참고)
         binding.facebookLoginButton.registerCallback(facebookCallbackManger, object: FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult) {
                 val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
@@ -146,7 +146,6 @@ class LoginActivity : AppCompatActivity() {
         val user = mutableMapOf<String, Any>()
         user["userId"] = userId
         currentUserDB.updateChildren(user)
-        //Users -> userId -> user(userId)
         finish()
     }
 }

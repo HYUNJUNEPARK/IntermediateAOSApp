@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tinder">
         <activity
-            android:name=".activity.LikeActivity"
+            android:name=".activity.activity.LikeActivity"
             android:exported="true" />
 
         <meta-data
@@ -23,10 +23,10 @@
             android:value="@string/facebook_client_token" />
 
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.activity.LoginActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

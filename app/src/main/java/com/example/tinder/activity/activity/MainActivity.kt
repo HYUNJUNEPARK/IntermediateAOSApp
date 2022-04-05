@@ -1,4 +1,4 @@
-package com.example.tinder.activity
+package com.example.tinder.activity.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -26,6 +26,5 @@ class MainActivity : AppCompatActivity() {
         else {
             startActivity(Intent(this, LikeActivity::class.java))
         }
-
     }
 }

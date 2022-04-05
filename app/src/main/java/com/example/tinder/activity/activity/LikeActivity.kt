@@ -1,12 +1,15 @@
-package com.example.tinder.activity
+package com.example.tinder.activity.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tinder.activity.LoginActivity.Companion.TAG
+import com.example.tinder.activity.CardItemAdapter
+import com.example.tinder.activity.activity.LoginActivity.Companion.TAG
+import com.example.tinder.activity.model.CardItem
 import com.example.tinder.databinding.ActivityLikeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -15,19 +18,28 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.CardStackListener
+import com.yuyakaido.android.cardstackview.Direction
 
-class LikeActivity : AppCompatActivity() {
+class LikeActivity : AppCompatActivity(), CardStackListener {
     private val binding by lazy { ActivityLikeBinding.inflate(layoutInflater) }
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var usersDB: DatabaseReference
+    private val adapter = CardItemAdapter()
+    private val cardItems = mutableListOf<CardItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initDB()
+        initCardStackView()
+    }
+
+    private fun initDB() {
         usersDB = Firebase.database.reference.child("Users")
         val currentUserDB = usersDB.child(getCurrentUserID())
-
         //DB 에서 데이터를 받아올때는 대부분 리스너를 사용
         val listener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -78,6 +90,18 @@ class LikeActivity : AppCompatActivity() {
         }
         return auth.currentUser!!.uid
     }
+
+//CardStackView
+    private fun initCardStackView() {
+        binding.cardStackView.layoutManager = CardStackLayoutManager(this, this)
+        binding.cardStackView.adapter = adapter
+    }
+    override fun onCardSwiped(direction: Direction?) {    }
+    override fun onCardDragging(direction: Direction?, ratio: Float) {    }
+    override fun onCardRewound() {    }
+    override fun onCardCanceled() {    }
+    override fun onCardAppeared(view: View?, position: Int) {    }
+    override fun onCardDisappeared(view: View?, position: Int) {    }
 }
     
 

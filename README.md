@@ -45,6 +45,11 @@ reference
 
 
 yuyakaido / CardStackView(Opensource Library)
+https://github.com/yuyakaido/CardStackView
 
+
+---
+DiffUtil
+https://velog.io/@haero_kim/Android-DiffUtil-%EC%82%AC%EC%9A%A9%EB%B2%95-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0
 
 
