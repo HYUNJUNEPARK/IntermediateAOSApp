@@ -1,27 +1,26 @@
-package com.example.tinder.activity
+package com.example.tinder.activity.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tinder.activity.CardItemAdapter
 import com.example.tinder.activity.model.CardItem
 import com.example.tinder.databinding.ItemCardBinding
+import com.example.tinder.databinding.ItemMatchedUserBinding
 
-class CardItemAdapter: ListAdapter<CardItem, CardItemAdapter.ViewHolder>(diffUtil) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardItemAdapter.ViewHolder {
-        val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+class MatchedUserAdapter: ListAdapter<CardItem, MatchedUserAdapter.ViewHolder>(diffUtil) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchedUserAdapter.ViewHolder {
+
+        val binding = ItemMatchedUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    inner class ViewHolder(val binding: ItemCardBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemMatchedUserBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(cardItem: CardItem) {
-            binding.nameTextView.text = cardItem.name
+            binding.userNameTextView.text = cardItem.name
         }
-    }
-
-    override fun onBindViewHolder(holder: CardItemAdapter.ViewHolder, position: Int) {
-        holder.bind(currentList[position])
     }
 
     companion object {
@@ -33,5 +32,9 @@ class CardItemAdapter: ListAdapter<CardItem, CardItemAdapter.ViewHolder>(diffUti
                 return oldItem == newItem
             }
         }
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(currentList[position])
     }
 }

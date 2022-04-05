@@ -1,5 +1,6 @@
 package com.example.tinder.activity.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -36,6 +37,21 @@ class LikeActivity : AppCompatActivity(), CardStackListener {
 
         initDB()
         initCardStackView()
+        initMatchedListButton()
+        initSignOutButton()
+    }
+    private fun initMatchedListButton() {
+        binding.matchListButton.setOnClickListener {
+            startActivity(Intent(this, MatchedUserActivity::class.java))
+        }
+    }
+
+    private fun initSignOutButton() {
+        binding.SignOutButton.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun initDB() {
@@ -172,6 +188,8 @@ class LikeActivity : AppCompatActivity(), CardStackListener {
             .child(getCurrentUserID())
             .setValue(true)
 
+        saveMatchIfOtherUserLikedMe(card.userId)
+
         // todo 매칭 처리
         Toast.makeText(this, "Like! Matched!", Toast.LENGTH_SHORT).show()
     }
@@ -185,6 +203,34 @@ class LikeActivity : AppCompatActivity(), CardStackListener {
             .child("disLike")
             .child(getCurrentUserID())
             .setValue(true)
+    }
+
+    private fun saveMatchIfOtherUserLikedMe(otherUserId: String) {
+        val otherUserDB = usersDB.child(getCurrentUserID()).child("likedBy").child("like").child(otherUserId)
+        otherUserDB.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value == true) {
+                    usersDB.child(getCurrentUserID())
+                        .child("likedBy")
+                        .child("match")
+                        .child(otherUserId)
+                        .setValue(true)
+
+                    usersDB.child(getCurrentUserID())
+                        .child("likedBy")
+                        .child("match")
+                        .child(getCurrentUserID())
+                        .setValue(true)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
     }
 }
     
