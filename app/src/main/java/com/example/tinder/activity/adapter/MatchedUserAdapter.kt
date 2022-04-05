@@ -5,14 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tinder.activity.CardItemAdapter
 import com.example.tinder.activity.model.CardItem
-import com.example.tinder.databinding.ItemCardBinding
 import com.example.tinder.databinding.ItemMatchedUserBinding
 
 class MatchedUserAdapter: ListAdapter<CardItem, MatchedUserAdapter.ViewHolder>(diffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchedUserAdapter.ViewHolder {
-
         val binding = ItemMatchedUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }

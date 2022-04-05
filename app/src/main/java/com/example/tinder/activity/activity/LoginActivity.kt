@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import com.example.tinder.R
+import com.example.tinder.activity.DBKey.Companion.USERS
+import com.example.tinder.activity.DBKey.Companion.USER_ID
 import com.example.tinder.databinding.ActivityLoginBinding
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -141,23 +143,11 @@ class LoginActivity : AppCompatActivity() {
             return
         }
         val userId = auth.currentUser!!.uid
-        val currentUserDB = Firebase.database.reference.child("Users").child(userId)
+        val currentUserDB = Firebase.database.reference.child(USERS).child(userId)
         val user = mutableMapOf<String, Any>()
-        user["userId"] = userId
+        user[USER_ID] = userId
         currentUserDB.updateChildren(user)
         finish()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

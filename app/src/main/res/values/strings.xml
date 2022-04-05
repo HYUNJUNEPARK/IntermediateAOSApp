@@ -17,4 +17,5 @@
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">56789</string>
     <string name="toast_fail">로그인 실패</string>
+    <string name="toast_not_login">로그인 되어있지 않습니다</string>
 </resources>
