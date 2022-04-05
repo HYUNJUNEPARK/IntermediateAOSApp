@@ -77,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.toast_login_fail), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { signInTask ->
                     if (signInTask.isSuccessful) {

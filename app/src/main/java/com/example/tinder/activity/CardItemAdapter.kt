@@ -15,16 +15,18 @@ class CardItemAdapter: ListAdapter<CardItem, CardItemAdapter.ViewHolder>(diffUti
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardItemAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
-        //val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        //return ViewHolder(binding)
+        val binding = ItemCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
 
-        return ViewHolder(inflater.inflate(R.layout.item_card, parent, false))
+        //return ViewHolder(inflater.inflate(R.layout.item_card, parent, false))
     }
 
-    inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(val binding: ItemCardBinding): RecyclerView.ViewHolder(binding.root) {
+
         fun bind(cardItem: CardItem) {
             //TODO Binding
-            view.findViewById<TextView>(R.id.nameTextView).text = cardItem.name
+            //view.findViewById<TextView>(R.id.nameTextView).text = cardItem.name
+            binding.nameTextView.text = cardItem.name
         }
     }
 

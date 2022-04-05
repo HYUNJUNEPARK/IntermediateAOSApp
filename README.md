@@ -33,6 +33,9 @@ currentUserDB.updateChildren(user)
 reference
 ㄴ Users
     ㄴ currentUser(EAfewfcgwwdv3234434t542234sxvacv)
+        ㄴ likedBy
+            ㄴ like or diskLike
+                ㄴ E12315ddvaaDSASwdv3234434tsxvacv
         ㄴ name
         ㄴ userId : EAfewfcgwwdv3234434t542234sxvacv
     ㄴ currentUser(E12315ddvaaDSASwdv3234434tsxvacv)
