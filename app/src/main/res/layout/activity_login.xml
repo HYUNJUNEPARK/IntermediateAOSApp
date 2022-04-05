@@ -3,65 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="24dp"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".activity.LoginActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/tinderImageView"
-        android:src="@drawable/icon_tiner"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/icon_tiner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/emailEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@id/tinderImageView"
+        android:hint="ID를 입력해주세요"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tinderImageView" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="PW를 입력해주세요"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/emailEditText"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signUpButton"
-        android:text="이메일 회원가입"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="30dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="4dp"
+        android:enabled="false"
+        android:text="이메일 회원가입"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginButton"
-        android:text="이메일 로그인"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="이메일 로그인"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/signUpButton"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/signUpButton" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebookLoginButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

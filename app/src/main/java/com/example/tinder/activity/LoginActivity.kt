@@ -16,6 +16,7 @@ import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText = binding.passwordEditText
 
         initButtonState()
-        initLoginButton()
+        initSignInButton()
         initSingUpButton()
         initFacebookLoginButton()
     }
@@ -67,15 +68,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLoginButton() {
+    private fun initSignInButton() {
         binding.loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
+
+            if (email.isEmpty() && password.isEmpty()) {
+                Toast.makeText(this, getString(R.string.toast_login_fail), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { signInTask ->
                     if (signInTask.isSuccessful) {
                         finish()
+                        handleSuccessSignIn()
                     }
                     else {
                         Toast.makeText(this, getString(R.string.toast_login_fail), Toast.LENGTH_SHORT).show()
@@ -88,6 +95,11 @@ class LoginActivity : AppCompatActivity() {
         binding.signUpButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
+
+            if (email.isEmpty() && password.isEmpty()) {
+                Toast.makeText(this, getString(R.string.toast_login_fail), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { signUpTask ->
@@ -104,12 +116,13 @@ class LoginActivity : AppCompatActivity() {
     private fun initFacebookLoginButton() {
         binding.facebookLoginButton.setPermissions("email", "public_profile") //이메일, 프로필 정보를 가져옴(더 필요한 데이터가 있다면 페이스북 문서 참고)
         binding.facebookLoginButton.registerCallback(facebookCallbackManger, object: FacebookCallback<LoginResult> {
-            override fun onSuccess(result: LoginResult) {//로그인 액세스 토큰을 받아 credential 을 만들어 파이어베이스에 넘김
+            override fun onSuccess(result: LoginResult) {
                 val credential = FacebookAuthProvider.getCredential(result.accessToken.token)
                 auth.signInWithCredential(credential)
                     .addOnCompleteListener(this@LoginActivity) { signInTask ->
                         if (signInTask.isSuccessful) {
                             finish()
+                            handleSuccessSignIn()
                         }
                         else {
                             Toast.makeText(this@LoginActivity, getString(R.string.toast_fail), Toast.LENGTH_SHORT).show()
@@ -123,4 +136,30 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+    private fun handleSuccessSignIn() {
+        if (auth.currentUser == null) {
+            Toast.makeText(this, getString(R.string.toast_fail), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val userId = auth.currentUser!!.uid
+        val currentUserDB = Firebase.database.reference.child("Users").child(userId)
+        val user = mutableMapOf<String, Any>()
+        user["userId"] = userId
+        currentUserDB.updateChildren(user)
+        //Users -> userId -> user(userId)
+        finish()
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
