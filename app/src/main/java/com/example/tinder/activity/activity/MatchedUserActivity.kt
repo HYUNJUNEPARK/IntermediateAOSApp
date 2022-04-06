@@ -5,10 +5,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tinder.R
-import com.example.tinder.activity.DBKey.Companion.LIKED_BY
-import com.example.tinder.activity.DBKey.Companion.MATCH
-import com.example.tinder.activity.DBKey.Companion.NAME
-import com.example.tinder.activity.DBKey.Companion.USERS
+import com.example.tinder.activity.key.DBKey.Companion.LIKED_BY
+import com.example.tinder.activity.key.DBKey.Companion.MATCH
+import com.example.tinder.activity.key.DBKey.Companion.NAME
+import com.example.tinder.activity.key.DBKey.Companion.USERS
 import com.example.tinder.activity.adapter.MatchedUserAdapter
 import com.example.tinder.activity.model.CardItem
 import com.example.tinder.databinding.ActivityMatchedUserBinding
@@ -31,7 +31,28 @@ class MatchedUserActivity : AppCompatActivity() {
         usersDB = Firebase.database.reference.child(USERS)
         initMatchedUserRecycelrView()
         getMatchUsers()
+    }
 
+    private fun initMatchedUserRecycelrView() {
+        binding.matchedUserRecyclerView.adapter = adapter
+        binding.matchedUserRecyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun getMatchUsers() {
+        val matchedDB = usersDB.child(getCurrentUserID()).child(LIKED_BY).child(MATCH)
+        val listener = object: ChildEventListener{
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val userId = snapshot.key
+                if (userId?.isNotEmpty() == true) {
+                    getUserByKey(userId.orEmpty())
+                }
+            }
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) { }
+            override fun onChildRemoved(snapshot: DataSnapshot) { }
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) { }
+            override fun onCancelled(error: DatabaseError) { }
+        }
+        matchedDB.addChildEventListener(listener)
     }
 
     private fun getCurrentUserID(): String {
@@ -42,33 +63,15 @@ class MatchedUserActivity : AppCompatActivity() {
         return auth.currentUser!!.uid
     }
 
-    private fun initMatchedUserRecycelrView() {
-        binding.matchedUserRecyclerView.adapter = adapter
-        binding.matchedUserRecyclerView.layoutManager = LinearLayoutManager(this)
-    }
-
-    private fun getMatchUsers() {
-        val matchedDB = usersDB.child(getCurrentUserID()).child(LIKED_BY).child(MATCH)
-        matchedDB.addChildEventListener(object: ChildEventListener{
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                if (snapshot.key?.isNotEmpty() == true) {
-                    getUserByKey(snapshot.key.orEmpty())
-                }
-            }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) { }
-            override fun onChildRemoved(snapshot: DataSnapshot) { }
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) { }
-            override fun onCancelled(error: DatabaseError) { }
-        })
-    }
-
     private fun getUserByKey(userId: String) {
-        usersDB.child(userId).addListenerForSingleValueEvent(object : ValueEventListener{
+        val listener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                cardItems.add(CardItem(userId, snapshot.child(NAME).value.toString()))
+                val name = snapshot.child(NAME).value.toString()
+                cardItems.add(CardItem(userId, name))
                 adapter.submitList(cardItems)
             }
             override fun onCancelled(error: DatabaseError) { }
-        })
+        }
+        usersDB.child(userId).addListenerForSingleValueEvent(listener)
     }
 }

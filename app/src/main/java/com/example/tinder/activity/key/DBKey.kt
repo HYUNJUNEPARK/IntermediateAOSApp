@@ -1,4 +1,4 @@
-package com.example.tinder.activity
+package com.example.tinder.activity.key
 
 class DBKey {
     companion object {
@@ -10,5 +10,4 @@ class DBKey {
         const val LIKE = "like"
         const val DISLIKE = "disLike"
     }
-
 }
