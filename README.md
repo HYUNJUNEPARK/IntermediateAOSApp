@@ -1,4 +1,4 @@
-# 프로젝트 이름
+# Tinder
 
 <img src="https://github.com/HYUNJUNEPARK/ImageRepository/blob/master/IntermediateApp/Tinder.png" height="400"/>
 
