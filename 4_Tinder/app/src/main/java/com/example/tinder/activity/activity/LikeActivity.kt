@@ -14,6 +14,7 @@ import com.example.tinder.activity.key.DBKey.Companion.LIKE
 import com.example.tinder.activity.key.DBKey.Companion.LIKED_BY
 import com.example.tinder.activity.key.DBKey.Companion.MATCH
 import com.example.tinder.activity.key.DBKey.Companion.NAME
+import com.example.tinder.activity.key.DBKey.Companion.USERS
 import com.example.tinder.activity.key.DBKey.Companion.USER_ID
 import com.example.tinder.activity.model.CardItem
 import com.example.tinder.databinding.ActivityLikeBinding
@@ -60,7 +61,7 @@ class LikeActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun initDB() {
-        usersDB = Firebase.database.reference.child("Users")
+        usersDB = Firebase.database.reference.child(USERS)
         val currentUserDB = usersDB.child(getCurrentUserID())
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -78,7 +79,7 @@ class LikeActivity : AppCompatActivity(), CardStackListener {
     private fun getUnSelectedUsers() {
         val listener = object: ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                if(snapshot.child(USER_ID).value != getCurrentUserID() //내가 아닌 사람
+                if( snapshot.child(USER_ID).value != getCurrentUserID() //내가 아닌 사람
                     && snapshot.child(LIKED_BY).child(LIKE).hasChild(getCurrentUserID()).not() //나한테 like/dislike 받지 않음 사람
                     && snapshot.child(LIKED_BY).child(DISLIKE).hasChild(getCurrentUserID()).not() ) {
 

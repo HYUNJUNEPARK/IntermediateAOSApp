@@ -92,6 +92,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun handleSuccessSignIn() {
+        if (auth.currentUser == null) {
+            Toast.makeText(this, getString(R.string.toast_fail), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val userId = auth.currentUser!!.uid
+        val currentUserDB = Firebase.database.reference.child(USERS).child(userId)
+        val user = mutableMapOf<String, Any>()
+        user[USER_ID] = userId
+        currentUserDB.updateChildren(user)
+        finish()
+    }
+
     private fun initSingUpButton() {
         binding.signUpButton.setOnClickListener {
             val email = emailEditText.text.toString()
@@ -137,17 +150,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun handleSuccessSignIn() {
-        if (auth.currentUser == null) {
-            Toast.makeText(this, getString(R.string.toast_fail), Toast.LENGTH_SHORT).show()
-            return
-        }
-        val userId = auth.currentUser!!.uid
-        val currentUserDB = Firebase.database.reference.child(USERS).child(userId)
-        val user = mutableMapOf<String, Any>()
-        user[USER_ID] = userId
-        currentUserDB.updateChildren(user)
-        finish()
-    }
+
 }
 
