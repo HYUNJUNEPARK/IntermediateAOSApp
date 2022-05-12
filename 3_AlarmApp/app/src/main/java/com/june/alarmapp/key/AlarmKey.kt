@@ -12,6 +12,9 @@ class AlarmKey {
         const val NOTIFICATION_CHANNEL_ID = "1000"
         const val NOTIFICATION_CHANNEL_NAME = "기상 알람"
         //Foreground Service
-        const val CHANNEL_ID = "ForegroundChannel"
+        const val SERVICE_NOTIFICATION_ID = 1
+        const val SERVICE_NOTIFICATION_CHANNEL_ID = "ForegroundChannel"
+        const val SERVICE_NOTIFICATION_CHANNEL_NAME = "Foreground Service Channel"
+
     }
 }
