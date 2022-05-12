@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.june.alarmapp">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlarmApp">
+        <service
+            android:name=".service.AlarmForegroundService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
@@ -21,8 +28,7 @@
 
         <receiver
             android:name=".receiver.AlarmReceiver"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

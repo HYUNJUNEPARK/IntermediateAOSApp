@@ -132,6 +132,9 @@ data class Alarm (val hour: Int, val minute: Int, var isOn: Boolean) {
 
 ><a id = "ref">**참고링크**</a></br>
 
+알람 어플 구현</br>
+https://whyprogrammer.tistory.com/588
+
 pendingIntent</br>
 https://velog.io/@haero_kim/Android-PendingIntent-%EA%B0%9C%EB%85%90-%EC%9D%B5%ED%9E%88%EA%B8%B0</br>
 
