@@ -10,7 +10,7 @@ import com.june.pushalarmreceiver.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     companion object {
-        private const val TAG = "LogForDev"
+        const val TAG = "testLog"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
-        Log.d(TAG, "onNewIntent")
         setIntent(intent) //onCreate 했을 때 가져온 기존 인텐트를 새로 들어온 걸로 교체
         updateResult(true)
     }

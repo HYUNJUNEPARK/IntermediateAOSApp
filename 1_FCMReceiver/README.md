@@ -85,7 +85,7 @@ cf. activity_main - textView 에 아래 속성을 추가하면 텍스트를 복�
 
 (3) 파이어베이스에서 지정 앱에 메시지를 보내기</br>
 -우측에 있는 Try this method 를 채워넣음</br>
--https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send</br>
+-`https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages/send`</br>
 
 -**parent** : id 는 google-services.json - "project_id" 에서 확인 가능</br>
 -**Request body**</br>
@@ -98,8 +98,9 @@ cf. activity_main - textView 에 아래 속성을 추가하면 텍스트를 복�
     "message": {
         "token": "userToken"
         "data" : {
+            "type" : CUSTOM
             "title" : "Title Of Test Message"
-            "message" "Message Of Test Message"
+            "message" : "Message Of Test Message"
         }
     }
 }
